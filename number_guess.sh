@@ -40,6 +40,7 @@ MAIN () {
       MAIN "It's lower than that, guess again:"
     else 
       echo You guessed it in $COUNT tries. The secret number was $RANDOM_NUM. Nice job!
+      INSERT_INTO_GAMES=$($PSQL "insert into games(user_id, number_of_guess) values($USER_ID, $COUNT)")
     fi
   fi
 }
