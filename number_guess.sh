@@ -14,7 +14,7 @@ then
   USER_ID=$($PSQL "select user_id from users where name='$USERNAME'")
   echo Welcome, $USERNAME! It looks like this is your first time here.
 else
-  echo $($PSQL "select count(*), min(number_of_guess) from games where user_id='$USER_ID'") | ( read GAME_PLAYED BAR BEST_GAME
+  echo $($PSQL "select count(*), min(number_of_guess) from games where user_id='$USER_ID'") | ( IFS='|' read GAME_PLAYED BEST_GAME
   echo Welcome back, $USERNAME! You have played $GAME_PLAYED games, and your best game took $BEST_GAME guesses.
   )
 fi
