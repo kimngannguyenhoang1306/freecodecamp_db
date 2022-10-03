@@ -1,8 +1,9 @@
 #!/bin/bash
 
 PSQL="psql --username=freecodecamp --dbname=number_guess -t --no-align -c"
-
-echo $RANDOM
+COUNT=0
+RANDOM_NUM=$(( $RANDOM % 1000 + 1 ))
+echo $RANDOM_NUM
 echo Enter your username:
 read USERNAME
 
@@ -18,4 +19,29 @@ else
   )
 fi
 
+MAIN () {
+  if [[ -z $1 ]]
+  then
+    echo Guess the secret number between 1 and 1000:
+  else
+    echo $1
+  fi
+  read GUESS_NUMBER
+  if [[ ! $GUESS_NUMBER =~ ^[0-9]+$ ]]
+  then
+    MAIN "That is not an integer, guess again:"
+  else
+    COUNT=$((COUNT+1))
+    if [[ $GUESS_NUMBER -gt $RANDOM_NUM ]]
+    then
+      MAIN "It's higher than that, guess again:"
+    elif [[ $GUESS_NUMBER -lt $RANDOM_NUM ]]
+    then
+      MAIN "It's lower than that, guess again:"
+    else 
+      echo You guessed it in $COUNT tries. The secret number was $RANDOM_NUM. Nice job!
+    fi
+  fi
+}
 
+MAIN
